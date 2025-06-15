@@ -15,11 +15,8 @@ Indonesia merupakan salah satu negara penghasil apel terbesar di Asia Tenggara, 
 Namun, penurunan kualitas apel akibat faktor seperti ukuran, kematangan, dan kerenyahan menjadi tantangan utama. Hal ini berdampak pada kerugian ekonomi bagi petani dan distributor, serta menurunkan kepuasan konsumen.
 
 * Dengan memanfaatkan pendekatan Predictive Analytics, proyek ini bertujuan untuk:
-
 * Meningkatkan efisiensi dan akurasi penilaian kualitas apel.
-
 * Mendukung petani dan distributor dalam pengambilan keputusan berbasis data.
-
 * Memberikan produk apel yang lebih konsisten dan berkualitas bagi konsumen.
 
 💼 Business Understanding
@@ -27,25 +24,19 @@ Namun, penurunan kualitas apel akibat faktor seperti ukuran, kematangan, dan ker
 Model prediksi kualitas apel berpotensi:
 
 * Membantu petani memilah apel berkualitas tinggi untuk dipasarkan dengan harga lebih baik.
-
 * Memfasilitasi distributor dalam proses sortasi dan pengelolaan rantai pasok.
-
 * Meningkatkan kepercayaan konsumen dengan penyediaan produk berkualitas stabil.
 
 ❓ Problem Statements
 ------------------------
 1. Bagaimana membangun model machine learning untuk memprediksi kualitas apel berdasarkan fitur visual dan sensorik?
-
 2. Model machine learning apa yang memberikan akurasi prediksi terbaik?
-
 3. Bagaimana model tersebut dapat memberikan dampak nyata bagi petani dan distributor?
 
 🎯 Goals
 ----------
 * Mengembangkan model prediksi kualitas apel menggunakan teknik machine learning.
-
 * Membandingkan performa beberapa algoritma untuk mendapatkan model terbaik.
-
 * Merancang solusi yang dapat digunakan secara praktis oleh pelaku industri pertanian.
 
 💡 Solution Statements
@@ -67,16 +58,18 @@ Mengembangkan berbagai model klasifikasi, seperti:
 📄 Informasi Dataset
 Dataset digunakan dari Apple Quality Dataset yang tersedia secara publik di Kaggle. Dataset ini berisi data primer dari perusahaan pertanian di Amerika.
 
-| Kolom      | Deskripsi                    |
+🔗 https://www.kaggle.com/datasets/nelgiriyewithana/apple-quality 
+
+| Kolom      | Deskripsi                       |
 |------------|---------------------------------|
 | Size	     | Ukuran apel                     |
-| Weight	| Berat apel
-| Sweetness | 	Tingkat kemanisan
-| Crunchiness |	Tingkat kerenyahan
-| Juiciness |	Tingkat berair
-| Ripeness n| Tingkat kematangan
-| Acidity	| Tingkat keasaman
-| Quality	| Label kualitas (good atau bad)
+| Weight	   | Berat apel                      |
+| Sweetness  | 	Tingkat kemanisan              |
+| Crunchiness|	Tingkat kerenyahan             |
+| Juiciness  |	Tingkat berair                 |
+| Ripeness n | Tingkat kematangan              |
+| Acidity	   | Tingkat keasaman                |
+| Quality  	 | Label kualitas (good atau bad)  |
 
 
 Dataset yang digunakan dalam proyek ini merupakan data primer yang berasal dari sebuah perusahaan pertanian di Amerika Serikat. Dataset ini tersedia secara publik di platform Kaggle dengan nama Apple Quality Dataset.
@@ -101,17 +94,18 @@ Terdapat 1 nilai kosong (missing value) dalam dataset.
 
 🧾 Deskripsi Setiap Variabel:
 ----------------------------
-| Variabel                  | 	Deskripsi                          -       |
-| --------------------------| ---------------------------------------------|
-| A_id	                    | Identifikasi unik untuk setiap buah apel     |
-| Size                      |	Ukuran buah apel                             |
-| Weight	                  | Berat buah apel                              | 
-| Sweetness	                | Tingkat kemanisan buah apel
-| Crunchiness	              | Tingkat kerenyahan tekstur buah apel
-| Juiciness	                | Tingkat kesegaran atau berairnya buah apel
-| Ripeness	                | Tahap kematangan buah apel
-| Acidity	                  | Tingkat keasaman buah apel
-| Quality	                  | Kualitas keseluruhan buah apel (baik = good, buruk = bad)
+
+| Variabel                  | 	Deskripsi                          -                     |
+| --------------------------| ---------------------------------------------              |
+| A_id	                    | Identifikasi unik untuk setiap buah apel                   |
+| Size                      |	Ukuran buah apel                                           |
+| Weight	                  | Berat buah apel                                            | 
+| Sweetness	                | Tingkat kemanisan buah apel                                |
+| Crunchiness	              | Tingkat kerenyahan tekstur buah apel                       |
+| Juiciness	                | Tingkat kesegaran atau berairnya buah apel                 |
+| Ripeness	                | Tahap kematangan buah apel                                 |
+| Acidity	                  | Tingkat keasaman buah apel                                 |
+| Quality	                  | Kualitas keseluruhan buah apel (baik = good, buruk = bad)  |
 
 
 📈 EDA - Univariate Analysis
@@ -176,6 +170,27 @@ Selebihnya, korelasi antar fitur sangat lemah hingga hampir tidak ada korelasi.
 
 🧹 Data Preparation
 -----------------------
+Proses persiapan data meliputi tahapan:
+1. Handling Missing Values
+Terdapat 1 baris pada indeks ke-4000 yang seluruh kolomnya berisi nilai kosong (NaN) atau informasi non-data
+![image](https://github.com/user-attachments/assets/8c4ef439-02b9-428d-af7a-0015cb60bdfb)
+Baris tersebut dihapus karena tidak memuat informasi relevan.
+Jumlah baris yang dihapus: 1 dari 4001, atau sekitar 0,025%.
+
+2. Handling Outliers
+Outlier ditangani menggunakan metode Interquartile Range (IQR), yaitu:
+![image](https://github.com/user-attachments/assets/4cf2d634-9672-4910-b5fe-edbece496f91)
+Jumlah data berkurang dari 4000 menjadi 3790 setelah outlier dihapus.
+
+3. Train-Test Split
+Data dibagi menjadi dua bagian:
+  * Data latih (80%) sebanyak 3.032 baris
+  * Data uji (20%) sebanyak 758 baris
+![image](https://github.com/user-attachments/assets/092bff74-67ad-416d-8276-88cfb2d5305e)
+
+4. 4. Normalization
+Fitur numerik dinormalisasi ke rentang [0, 1] menggunakan MinMaxScaler:
+
 Dalam tahap Data Preparation, dilakukan beberapa langkah penting untuk memastikan kualitas dan kesiapan data sebelum digunakan dalam proses pemodelan. Tahapan ini mencakup tiga proses utama: Data Gathering, Data Assessing, dan Data Cleaning.
 
 1. 📥 Data Gathering
@@ -199,8 +214,13 @@ Tabel data missing value
 
 🔍 Modeling
 -------------
-1. Random Forest 
+1. Random Forest Classifier
 Random Forest adalah algoritma ensemble learning yang membentuk hutan dari banyak pohon keputusan (decision trees) dan menggabungkan hasil prediksi dari setiap pohon untuk meningkatkan akurasi dan menghindari overfitting.
+
+![image](https://github.com/user-attachments/assets/256344fc-8834-482b-920c-120d3f3fc074)
+
+Hyperparameter utama: max_depth=20
+Alasan pemilihan: nilai ini memberikan keseimbangan antara underfitting dan overfitting pada dataset dengan kompleksitas sedang.
 
 Keuntungan Random Forest:
 * Memiliki akurasi tinggi dan tahan terhadap overfitting.
@@ -214,8 +234,10 @@ Kelemahan Random Forest:
 2. Support Vector Classifier (SVC)
 SVC adalah algoritma klasifikasi yang bekerja dengan mencari hyperplane terbaik yang memisahkan data dari berbagai kelas dengan margin maksimum. Cocok digunakan pada dataset yang memiliki dimensi tinggi.
 
-Keuntungan SVC:
+Hyperparameter utama: kernel='rbf' (Radial Basis Function)
+Alasan pemilihan: cocok untuk data non-linear, dan hasil eksperimen menunjukkan performa lebih baik daripada linear kernel.
 
+Keuntungan SVC:
 * Efektif pada dataset berdimensi tinggi.Dapat digunakan untuk kasus linear maupun non-linear (dengan kernel trick).
 * Memiliki generalisasi yang baik pada data yang belum pernah dilihat.
 
@@ -226,6 +248,9 @@ Kelemahan SVC:
 
 3. Naïve Bayes
 Naïve Bayes adalah metode klasifikasi berbasis probabilitas yang menggunakan Teorema Bayes. Algoritma ini mengasumsikan bahwa setiap fitur saling independen satu sama lain terhadap kelas target.
+
+Hyperparameter utama: Bernoullib 
+Alasan pemilihan: default value digunakan karena memberikan kestabilan pada prediksi dan cocok untuk fitur biner atau diskret (fitur telah dinormalisasi).
 
 Keuntungan Naïve Bayes:
 * Sederhana dan mudah diimplementasikan.
