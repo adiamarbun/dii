@@ -1,309 +1,229 @@
-🧠 Predictive Analytics: Kualitas Appel 
---------------------------------------------
+Laporan Proyek Machine Learning Terapan 
+Disusun oleh: Adisaputra
 
-Disusun Oleh: ADISAPUTRA 
+Ini adalah proyek akhir sistem rekomendasi untuk memenuhi submission dicoding. Proyek ini membangun model berbasis content based filtering yang dapat menentukan top-N rekomendasi anime dan model K-Nearest Neighbor.
 
-📌 Domain Proyek
-Proyek ini berada dalam domain Pertanian, dengan fokus pada penerapan Machine Learning untuk memprediksi kualitas buah apel berdasarkan karakteristik visual dan sensorik.
+![image](https://github.com/user-attachments/assets/7a8d158b-d79a-4704-b3d2-c1f8ec1fce18)
 
-📖 Latar Belakang
---------------------
-![images](https://github.com/user-attachments/assets/ec090884-d8b4-47d9-a3d7-7bb6812bfee3)
-
-Indonesia merupakan salah satu negara penghasil apel terbesar di Asia Tenggara, dengan produksi mencapai 1,2 juta ton per tahun. Apel menjadi komoditas penting dalam sektor pertanian dan memiliki kontribusi ekonomi signifikan.
-
-Namun, penurunan kualitas apel akibat faktor seperti ukuran, kematangan, dan kerenyahan menjadi tantangan utama. Hal ini berdampak pada kerugian ekonomi bagi petani dan distributor, serta menurunkan kepuasan konsumen.
-
-* Dengan memanfaatkan pendekatan Predictive Analytics, proyek ini bertujuan untuk:
-* Meningkatkan efisiensi dan akurasi penilaian kualitas apel.
-* Mendukung petani dan distributor dalam pengambilan keputusan berbasis data.
-* Memberikan produk apel yang lebih konsisten dan berkualitas bagi konsumen.
-
-💼 Business Understanding
-----------------------------
-Model prediksi kualitas apel berpotensi:
-
-* Membantu petani memilah apel berkualitas tinggi untuk dipasarkan dengan harga lebih baik.
-* Memfasilitasi distributor dalam proses sortasi dan pengelolaan rantai pasok.
-* Meningkatkan kepercayaan konsumen dengan penyediaan produk berkualitas stabil.
-
-❓ Problem Statements
-------------------------
-1. Bagaimana membangun model machine learning untuk memprediksi kualitas apel berdasarkan fitur visual dan sensorik?
-2. Model machine learning apa yang memberikan akurasi prediksi terbaik?
-3. Bagaimana model tersebut dapat memberikan dampak nyata bagi petani dan distributor?
-
-🎯 Goals
-----------
-* Mengembangkan model prediksi kualitas apel menggunakan teknik machine learning.
-* Membandingkan performa beberapa algoritma untuk mendapatkan model terbaik.
-* Merancang solusi yang dapat digunakan secara praktis oleh pelaku industri pertanian.
-
-💡 Solution Statements
--------------------------
-Solusi dikembangkan melalui beberapa tahap:
-
-Melakukan univariate dan multivariate analysis untuk memahami data secara mendalam.
-
-Membersihkan data (data cleaning) dan mengatasi missing value serta outlier.
-
-Mengembangkan berbagai model klasifikasi, seperti:
-
-1. Random Forest: model ensemble berbasis decision tree.
-2. Naive Bayes: klasifikasi probabilistik berdasarkan Teorema Bayes.
-3. SVC: VC bekerja dengan mencari hyperplane yang memiliki jarak terbesar ke titik-titik data terdekat dari setiap kelas (titik-titik ini disebut "support vectors").
-
-📊 Data Understanding
--------------------------
-📄 Informasi Dataset
-Dataset digunakan dari Apple Quality Dataset yang tersedia secara publik di Kaggle. Dataset ini berisi data primer dari perusahaan pertanian di Amerika.
-
-🔗 https://www.kaggle.com/datasets/nelgiriyewithana/apple-quality 
-
-| Kolom      | Deskripsi                       |
-|------------|---------------------------------|
-| Size	     | Ukuran apel                     |
-| Weight	   | Berat apel                      |
-| Sweetness  | 	Tingkat kemanisan              |
-| Crunchiness|	Tingkat kerenyahan             |
-| Juiciness  |	Tingkat berair                 |
-| Ripeness n | Tingkat kematangan              |
-| Acidity	   | Tingkat keasaman                |
-| Quality  	 | Label kualitas (good atau bad)  |
-
-
-Dataset yang digunakan dalam proyek ini merupakan data primer yang berasal dari sebuah perusahaan pertanian di Amerika Serikat. Dataset ini tersedia secara publik di platform Kaggle dengan nama Apple Quality Dataset.
-
-Dataset ini berisi berbagai fitur yang mengukur karakteristik apel secara visual dan sensorik, serta label kualitasnya. Fitur-fitur tersebut telah melalui proses standardisasi sehingga nilai-nilainya berbentuk skala standar (mean 0 dan deviasi standar 1). 
-
-![Screenshot 2025-06-12 231123](https://github.com/user-attachments/assets/1aedcff5-2ec9-4600-8f35-065c0052f704)
-
-📊 Tabel 1. EDA Deskripsi Variabel
------------------------------------
-Berdasarkan hasil eksplorasi awal terhadap dataset Apple Quality, dapat disimpulkan bahwa dataset ini telah dibersihkan dan dinormalisasi oleh penyedia data. Hal ini menjadikan dataset sangat ideal dan ramah bagi pemula yang ingin melakukan eksperimen machine learning.
-
-Informasi Umum Dataset:
-* Format file: CSV (Comma-Separated Values)
-* Jumlah sampel (baris): 4001
-* Jumlah fitur (kolom): 9
-* Tipe data:
-* float64: 7 fitur
-* object: 2 fitur
-
-Terdapat 1 nilai kosong (missing value) dalam dataset.
-
-🧾 Deskripsi Setiap Variabel:
-----------------------------
-
-| Variabel                  | 	Deskripsi                          -                     |
-| --------------------------| ---------------------------------------------              |
-| A_id	                    | Identifikasi unik untuk setiap buah apel                   |
-| Size                      |	Ukuran buah apel                                           |
-| Weight	                  | Berat buah apel                                            | 
-| Sweetness	                | Tingkat kemanisan buah apel                                |
-| Crunchiness	              | Tingkat kerenyahan tekstur buah apel                       |
-| Juiciness	                | Tingkat kesegaran atau berairnya buah apel                 |
-| Ripeness	                | Tahap kematangan buah apel                                 |
-| Acidity	                  | Tingkat keasaman buah apel                                 |
-| Quality	                  | Kualitas keseluruhan buah apel (baik = good, buruk = bad)  |
-
-
-📈 EDA - Univariate Analysis
-------------------------------
-Analisis univariat dilakukan untuk memahami distribusi dari masing-masing variabel secara individu. Teknik visualisasi seperti histogram digunakan untuk melihat bentuk distribusi, mendeteksi outlier, dan memeriksa kemungkinan skewness dalam data.
-
-![image](https://github.com/user-attachments/assets/93e74737-a12c-4806-994d-84585bb8d7dd)
-
-Gambar 1a. Analisis Univariat (Data Numerik)
-
-Pada gamabr 1a data numerik memiliki karakteristik, yaitu:
-
-1. Size: Ukuran rata-rata buah berkisar dari -2 hingga 2, dengan nilai rata-rata (mean) sebesar -0.51.
-2. Weight: Rata-rata berat apel adalah -0.99, sedangkan nilai maksimum berat mencapai 3.08.
-3. Sweetness: Tingkat kemanisan apel memiliki rata-rata sebesar -0.48.
-4. Crunchiness: Tekstur kerenyahan apel berkisar dari 0 hingga 2, yang menunjukkan bahwa rata-rata apel dalam dataset ini memiliki kerenyahan yang cukup baik.
-5. Juiciness dan Ripeness: Tingkat kesegaran dan kematangan buah memiliki nilai rata-rata masing-masing sebesar 0.50 dan 0.53.
-6. Acidity: Tingkat keasaman buah memiliki rata-rata sebesar 0.06.
-
-Nilai-nilai tersebut menunjukkan bahwa seluruh data numerik telah dinormalisasi menggunakan metode z-score normalization. Metode ini bekerja dengan:
-
-
-1. Mengurangi setiap nilai data dengan rata-rata (mean).
-2. Membagi hasilnya dengan standar deviasi (standard deviation) dari data tersebut.
-
-Sebagai contoh, meskipun nilai rata-rata fitur "Size" adalah -0.51, dengan sebaran dari -2 hingga 2, kita dapat mengasumsikan bahwa data telah diubah skalanya sehingga menyerupai distribusi dengan mean mendekati nol dan standar deviasi satu. Fitur numerik lainnya, seperti "Weight", "Sweetness", "Crunchiness", "Juiciness", "Ripeness", dan "Acidity", juga menunjukkan pola distribusi yang serupa dan mengindikasikan telah dinormalisasi dengan teknik yang sama.
-
-EDA - Multivariate Analysis
-
-![image](https://github.com/user-attachments/assets/a258a44f-4b24-4ed5-b017-898bf3e6fb2d)
-
-Gambar 2a. 📈 Pairplot 
-
-* Pairplot menampilkan hubungan antar fitur numerik melalui scatter plot dan distribusi univariat (diagonal).
-
-* Secara umum, sebagian besar fitur tidak menunjukkan pola hubungan linear yang kuat, yang terlihat dari sebaran titik yang menyebar acak.
-
-* Tidak ada multikolinearitas mencolok, karena tidak ada pasangan fitur yang memiliki scatter plot membentuk garis lurus atau pola jelas.
-
-* Distribusi pada diagonal menunjukkan data telah dinormalisasi (mengikuti sebaran normal standar).
-
-
-![image](https://github.com/user-attachments/assets/6c926426-a18d-4b36-9b4a-144a36b544c8)
-
-Gambar 2b. 🔥 Heatmap Korelasi 
-
-Heatmap korelasi menampilkan hubungan linear antar fitur dalam bentuk nilai korelasi Pearson:
-* Nilai berkisar dari -1 (negatif sempurna) hingga 1 (positif sempurna).
-* Warna merah = korelasi positif, biru = korelasi negatif, putih = hampir tidak berkorelasi.
-
-Insight utama dari heatmap:
-
-Korelasi negatif sedang antara:
-* Size dan Sweetness (-0.34) → semakin besar ukuran, cenderung kurang manis.
-* Sweetness dan Ripeness (-0.27) → kemungkinan buah matang tidak selalu manis.
-
-Korelasi positif sedang antara:
-* Juiciness dan Acidity (0.24) → buah yang lebih juicy cenderung lebih asam.
-* Size dan Acidity (0.18) → ukuran buah sedikit berbanding lurus dengan tingkat keasaman.
-
-Selebihnya, korelasi antar fitur sangat lemah hingga hampir tidak ada korelasi.
-
-🧹 Data Preparation
+Project Overview
 -----------------------
-Proses persiapan data meliputi tahapan:
-1. Handling Missing Values
-Terdapat 1 baris pada indeks ke-4000 yang seluruh kolomnya berisi nilai kosong (NaN) atau informasi non-data
-![image](https://github.com/user-attachments/assets/8c4ef439-02b9-428d-af7a-0015cb60bdfb)
-Baris tersebut dihapus karena tidak memuat informasi relevan.
-Jumlah baris yang dihapus: 1 dari 4001, atau sekitar 0,025%.
+Anime, animasi khas Jepang yang digemari banyak orang dari berbagai kalangan usia, kini tersedia di berbagai platform streaming seperti Netflix, Crunchyroll, dan lainnya. Namun, banyaknya pilihan anime yang tersedia justru membuat sebagian pengguna merasa kewalahan dalam menentukan pilihan tontonan yang sesuai dengan preferensi mereka. Untuk mengatasi permasalahan ini, penelitian ini mengusulkan penerapan sistem rekomendasi berbasis teknologi kecerdasan buatan.
+Sistem rekomendasi ini dirancang untuk menganalisis riwayat tontonan pengguna, genre favorit, serta rating yang diberikan pada anime sebelumnya. Dengan pendekatan ini, sistem dapat memberikan saran tontonan yang lebih relevan dan personal. Selain itu, sistem juga mempertimbangkan faktor lain seperti tingkat popularitas suatu anime, ulasan dari pengguna lain, serta rekomendasi yang muncul dalam komunitas pecinta anime, sehingga hasil rekomendasi menjadi lebih akurat dan sesuai kebutuhan pengguna.
+Manfaat dari sistem ini sangat signifikan, baik bagi pengguna maupun penyedia layanan streaming. Bagi pengguna, sistem ini dapat membantu mereka menemukan anime baru yang menarik, mengeksplorasi genre yang belum pernah ditonton sebelumnya, hingga menyesuaikan pilihan tontonan berdasarkan suasana hati. Di sisi lain, perusahaan penyedia layanan dapat memanfaatkan sistem ini untuk meningkatkan jumlah penonton, memperluas cakupan distribusi konten, meningkatkan kepuasan pelanggan, dan memperoleh wawasan lebih dalam tentang preferensi pengguna terkait anime yang paling diminati.
+Singkatnya, sistem rekomendasi anime berbasis data ini tidak hanya menjadi solusi praktis dalam membantu pengguna menemukan tontonan yang sesuai selera, tetapi juga memberikan nilai tambah dalam meningkatkan pengalaman menonton secara menyeluruh. Sistem ini menjadi jembatan antara keberagaman konten anime dengan kebutuhan unik setiap individu pengguna.
 
-2. Handling Outliers
-Outlier ditangani menggunakan metode Interquartile Range (IQR), yaitu:
-![image](https://github.com/user-attachments/assets/4cf2d634-9672-4910-b5fe-edbece496f91)
-Jumlah data berkurang dari 4000 menjadi 3790 setelah outlier dihapus.
+Business Understanding 
+------------------------
+Pengembangan sistem rekomendasi anime memiliki potensi strategis yang besar dalam industri hiburan digital, khususnya platform streaming anime. Di tengah pertumbuhan jumlah konten anime yang sangat cepat, pengguna sering mengalami kesulitan dalam memilih tontonan yang sesuai dengan preferensi mereka. Dalam konteks ini, sistem rekomendasi hadir sebagai solusi yang dapat memberikan pengalaman pengguna yang lebih personal, efisien, dan memuaskan.
+Dari sisi pengguna, sistem ini memungkinkan mereka menemukan anime yang sesuai dengan minat dan kebiasaan menonton secara lebih cepat dan akurat. Dengan mengandalkan data riwayat tontonan, genre favorit, rating yang diberikan, dan interaksi lain, sistem ini mampu menyajikan daftar rekomendasi yang relevan dan disesuaikan secara individual. Hal ini tidak hanya meningkatkan kepuasan pengguna, tetapi juga memperkaya pengalaman menonton secara keseluruhan.
+Sementara dari sisi bisnis, sistem rekomendasi memainkan peran penting dalam meningkatkan user engagement dan retensi pengguna. Platform streaming dapat mengurangi tingkat churn (penghentian langganan), meningkatkan waktu tonton rata-rata pengguna, serta mendorong eksplorasi konten yang lebih luas. Selain itu, data dari sistem ini dapat dimanfaatkan untuk memahami tren penonton, menyusun strategi pemasaran, serta merancang konten baru yang sesuai dengan permintaan pasar. 
 
-3. Train-Test Split
-Data dibagi menjadi dua bagian:
-  * Data latih (80%) sebanyak 3.032 baris
-  * Data uji (20%) sebanyak 758 baris
-![image](https://github.com/user-attachments/assets/092bff74-67ad-416d-8276-88cfb2d5305e)
+Problem Statements
+----------------------
+* Dengan menggunakan data rating yang dimiliki pengguna, bagaimana perusahaan jasa streaming dapat merekomendasikan anime yang belum pernah ditonton pengguna?
+* Bagaimanna cara mengukur nilai perfoma model sistem rekomendasi yang telah dibangun?
+* Bagaimana cara membuat sistem rekomendasi anime yang merekomendasikan pengguna berdasarkan genre anime?
+* Bagimana membuat model sistem rekomendasi Cosine Similarity dan K-Nearest Neighbor?
 
-4. 4. Normalization
-Fitur numerik dinormalisasi ke rentang [0, 1] menggunakan MinMaxScaler:
+Goals
+-------
+1. Mengukur perfoma model sistem rekomendasi dengan menggunakan metrik evaluasi
+2. Menghasilkan rekomendasi anime sebanyak Top-N Rekomendasi kepada pengguna berdasarkan genre.
+3. Menghasilkan beberapa rekomendasi anime yang sesuai dengan preferensi pengguna dan belum pernah ditonton.
+4. Untuk menjawab permasalahan tersebut dibuatlah sistem rekomendasi dengan tujuan sebagai berikut:
+5. Membuat model sistem rekomendasi Cosine Similarity dan K-Nearest Neighbor berdasarkan fitur yang telah dipilih dari dataset
 
-Dalam tahap Data Preparation, dilakukan beberapa langkah penting untuk memastikan kualitas dan kesiapan data sebelum digunakan dalam proses pemodelan. Tahapan ini mencakup tiga proses utama: Data Gathering, Data Assessing, dan Data Cleaning.
+Solution Approach
+-------------------
+Pendekatan solusi dalam membangun sistem rekomendasi anime dimulai dengan menganalisis data melalui proses Exploratory Data Analysis (EDA). Proses ini dilakukan untuk memahami pola, distribusi, dan hubungan antar variabel dalam dataset, serta untuk mengidentifikasi potensi permasalahan pada data. Setelah itu, dilakukan pembersihan data atau data cleaning untuk memastikan data yang digunakan memiliki kualitas yang baik. Tahapan ini mencakup penghapusan nilai kosong (missing value), pemeriksaan dan penghapusan data duplikat, serta pembersihan data teks dari karakter alfanumerik yang tidak relevan, tanda baca, dan tautan (URL) yang tidak memberikan informasi penting terhadap konten.
 
-1. 📥 Data Gathering
-Data dikumpulkan dan diimpor ke dalam lingkungan kerja menggunakan pustaka Pandas, kemudian disusun dalam bentuk DataFrame agar mudah dianalisis dan diolah. Proses ini memastikan bahwa data dapat dibaca dan digunakan dengan baik oleh alat-alat analisis selanjutnya.
+Selanjutnya, data kategorikal seperti genre atau tipe anime dikonversi menjadi data numerik menggunakan teknik One-Hot Encoding. Konversi ini bertujuan agar algoritma pembelajaran mesin dapat memproses data tersebut dengan optimal. Setelah data dipersiapkan sepenuhnya, proses pelatihan model rekomendasi dilakukan dengan menggunakan algoritma yang sesuai, tergantung pada pendekatan yang digunakan, misalnya clustering, content-based filtering, atau collaborative filtering.
 
-2. 🔍 Data Assessing
-Pada tahap ini, dilakukan evaluasi menyeluruh terhadap kualitas dan integritas data. Beberapa pengecekan penting yang dilakukan meliputi:
-* Duplicate Data: Mengidentifikasi dan menghapus baris data yang duplikat agar tidak memengaruhi hasil analisis.
-* Missing Values: Mengecek adanya nilai yang hilang atau tidak tersedia, lalu diputuskan penanganannya (diisi, dihapus, atau ditandai).
-* Outlier Detection: Mendeteksi nilai-nilai ekstrem yang menyimpang jauh dari distribusi umum data menggunakan teknik statistik seperti IQR atau z-score.
+Untuk mengevaluasi performa dari model rekomendasi yang dibangun, digunakan beberapa metrik evaluasi seperti Precision, Calinski-Harabasz Score, dan Davies-Bouldin Score. Precision digunakan untuk mengukur relevansi rekomendasi yang diberikan kepada pengguna, sedangkan Calinski-Harabasz Score dan Davies-Bouldin Score digunakan untuk mengevaluasi kualitas dan keakuratan hasil clustering dalam pendekatan berbasis kelompok. Melalui pendekatan ini, diharapkan sistem rekomendasi yang dibangun mampu memberikan hasil yang relevan dan personal sesuai preferensi pengguna, serta meningkatkan pengalaman menonton secara keseluruhan.
 
-3. 🧽 Data Cleaning
-Setelah proses asesmen, dilakukan pembersihan data untuk memastikan data dalam kondisi optimal. Proses yang dilakukan antara lain:
-* Converting Column Types: Mengubah tipe data kolom agar sesuai dengan kebutuhan analisis (misalnya dari objek ke numerik atau sebaliknya).
-* Train-Test Split: Membagi dataset menjadi data latih dan data uji guna menghindari overfitting dan memastikan evaluasi model yang adil.
-* Normalization: Melakukan normalisasi data, khususnya menggunakan metode z-score normalization, agar setiap fitur memiliki skala yang sebanding (mean = 0 dan standar deviasi = 1), sehingga model tidak bias terhadap fitur dengan skala besar.
+Data Understanding 
+-------------------------
+Dalam proyek ini, data yang digunakan berasal dari dataset berjudul Anime Dataset 2023 yang tersedia secara publik di platform Kaggle. Dataset ini dikelola oleh pengguna bernama Sajid dan dilisensikan dengan ketentuan Open Database License. Dataset ini bersifat terbuka dan ditujukan untuk keperluan publik, dengan fokus pada topik seni dan hiburan, khususnya dalam kategori film, acara televisi, anime, manga, dan budaya populer Jepang. Dataset ini berasal dari MyAnimeList, sebuah platform komunitas online yang populer dan berfungsi sebagai basis data bagi para penggemar anime dan manga. Platform tersebut menyediakan informasi lengkap tentang berbagai judul anime, termasuk skor dan ulasan dari pengguna.
 
-![image](https://github.com/user-attachments/assets/6a8e51e8-e623-4bda-88e9-5ad3330017ef)
+Secara keseluruhan, dataset ini tersedia dalam enam file berformat CSV (Comma-Separated Values), yaitu: anime-dataset-2023.csv, anime-filtered.csv, final_animedataset.csv, user-filtered.csv, users-details-2023.csv, dan users-score-2023.csv. Namun, dalam pengembangan model pada proyek ini, hanya digunakan file anime-filtered.csv.
 
-Tabel data missing value
+File anime-filtered.csv berisi 14.952 sampel data dengan total 25 fitur. Dari keseluruhan fitur tersebut, terdapat 15 fitur bertipe object, 8 fitur bertipe int64, dan 2 fitur bertipe float64. Dalam analisis awal melalui Exploratory Data Analysis (EDA), ditemukan bahwa terdapat nilai kosong (missing values) pada fitur synopsis sebanyak 1.350 dan pada fitur ranked sebanyak 1.721. Selain itu, tidak ditemukan adanya data yang bersifat duplikat dalam dataset ini, sehingga data dapat langsung digunakan setelah melalui proses pembersihan lanjutan.
 
-🔍 Modeling
--------------
-1. Random Forest Classifier
-Random Forest adalah algoritma ensemble learning yang membentuk hutan dari banyak pohon keputusan (decision trees) dan menggabungkan hasil prediksi dari setiap pohon untuk meningkatkan akurasi dan menghindari overfitting.
+Variable pada dataset 
+---------------------------
 
-![image](https://github.com/user-attachments/assets/256344fc-8834-482b-920c-120d3f3fc074)
+Kolom datasets anime memiliki informasi berikut:
 
-Hyperparameter utama: max_depth=20
-Alasan pemilihan: nilai ini memberikan keseimbangan antara underfitting dan overfitting pada dataset dengan kompleksitas sedang.
+* anime_id: ID unik untuk setiap anime (angka atau kode pengenal).
+* Name: Judul anime dalam bahasa aslinya.
+* Score: Skor atau rating yang diberikan kepada anime.
+* Genres: Genre anime, dipisahkan dengan koma (misalnya, Aksi, Komedi, Fantasi).
+* English name: Judul anime dalam bahasa Inggris (jika tersedia).
+* Japanese name: Judul anime dalam bahasa Jepang (jika tersedia).
+* Synopsis: Deskripsi singkat atau ringkasan plot anime.
+* Type: Jenis anime (misalnya, TV Series, Movie, OVA, dll.).
+* Episodes: Jumlah episode dalam anime.
+* Aired: Tanggal penayangan anime.
+* Premiered: Musim dan tahun penayangan perdana anime.
+* Producers: Perusahaan produksi atau produser anime.
+* Licensors: Pihak yang memiliki lisensi anime (misalnya, platform streaming).
+* Studios: Studio animasi yang mengerjakan anime.
+* Source: Sumber materi anime (misalnya, manga, light novel, original).
+* Duration: Durasi setiap episode anime.
+* Rating: Batasan usia untuk menonton anime.
+* Ranked: Peringkat anime berdasarkan popularitas atau kriteria lain.
+* Popularity: Peringkat popularitas anime.
+* Members: Jumlah anggota yang telah menambahkan anime ke daftar mereka di platform.
+* Favorites: Jumlah pengguna yang menandai anime sebagai favorit.
+* Watching: Jumlah anime yang sedang ditonton oleh pengguna.
+* Completed: Jumlah anime yang telah selesai ditonton oleh pengguna.
+* On Hold: Jumlah anime yang ditunda oleh pengguna.
+* Dropped: Jumlah anime yang dihentikan oleh pengguna.
 
-Keuntungan Random Forest:
-* Memiliki akurasi tinggi dan tahan terhadap overfitting.
-* Dapat menangani data dengan fitur dalam jumlah besar.
-* Dapat digunakan untuk data kategorik maupun numerik.
+![image](https://github.com/user-attachments/assets/6f9f82de-2aa5-4f5e-a064-1d89c3a7f9db)
+Gambar 1.Anime Categories Distribusion
 
-Kelemahan Random Forest:
-* Modelnya sulit diinterpretasikan secara langsung.
-* Waktu pelatihan bisa lebih lama dibanding model lain, terutama dengan banyak pohon.
+![image](https://github.com/user-attachments/assets/ec57393d-7b9a-464d-96fd-c85fd264c2ab)
+Gambar 2.Rating Distribusion
+Berdasarkan Gambar 2. Categories distribution anime terdiri dari 6 tipe berupa TV, OVA, Movie, Special, ONA, Music. TV (Television Series) yang ditayangkan di televisi dengan episode yang bervariasi, OVA (Original Video Animation) yang dirilis untuk media rumahan, seperti DVD, Movie yang dirilis di bioskop dengan durasi yang lebih panjang, Special yang seringkali menjadi bonus atau tambahan dari seri TV atau film, ONA (Original Net Animation) yang didistribusikan secara daring, dan Music yang dibuat untuk menyoroti perilisan album musik atau single dan berdasarkan Gambar 2. Rating dapat kita lihat rata-rata Rating adalah 6.5, minimal rating adalah 1.8, dan maxsimal rating adalah 9.1. Dan 
 
-2. Support Vector Classifier (SVC)
-SVC adalah algoritma klasifikasi yang bekerja dengan mencari hyperplane terbaik yang memisahkan data dari berbagai kelas dengan margin maksimum. Cocok digunakan pada dataset yang memiliki dimensi tinggi.
+![image](https://github.com/user-attachments/assets/8a176c24-83a8-4b9a-a587-9e4c1a086751)
+Gambar 3.Top 10 Anime 
 
-Hyperparameter utama: kernel='rbf' (Radial Basis Function)
-Alasan pemilihan: cocok untuk data non-linear, dan hasil eksperimen menunjukkan performa lebih baik daripada linear kernel.
+![image](https://github.com/user-attachments/assets/15ebba06-9d6e-4091-8ce2-942f88602695)
+Gambar 4.Top 10 Anime Rating 
 
-Keuntungan SVC:
-* Efektif pada dataset berdimensi tinggi.Dapat digunakan untuk kasus linear maupun non-linear (dengan kernel trick).
-* Memiliki generalisasi yang baik pada data yang belum pernah dilihat.
+Berdasarkan Gambar 3. Top 10 Anime Community dapat dilihat Top 10 Komunitas anime Death Note menjadi komunitas terbanyak pertama, disusul dengan Shingeki no Kyojin kedua, Fullmetal Alchemist: Brotherhood ketiga, Sword Art Online keempat, One Punch Man kelima, Boku no Hero Academia keenam, Tokyo Ghoul ketujuh, Naruto kedelapan, Steins Gate kesembilan, dan No Game No Life kesepuluh. Informasi ini dapat digunakan pengembang sistem dalam merekomendasikan anime yang populer kepada penggunanya. Banyaknya anggota komunitas anime menandakan bahwa anime cukup favorit dan populer di kalangan pengguna.
 
-Kelemahan SVC:
-* Kurang efisien pada dataset yang sangat besar.
-* Pemilihan kernel yang kurang tepat dapat menurunkan performa.
-* Parameter tuning (seperti C dan gamma) cukup sensitif.
-
-3. Naïve Bayes
-Naïve Bayes adalah metode klasifikasi berbasis probabilitas yang menggunakan Teorema Bayes. Algoritma ini mengasumsikan bahwa setiap fitur saling independen satu sama lain terhadap kelas target.
-
-Hyperparameter utama: Bernoullib 
-Alasan pemilihan: default value digunakan karena memberikan kestabilan pada prediksi dan cocok untuk fitur biner atau diskret (fitur telah dinormalisasi).
-
-Keuntungan Naïve Bayes:
-* Sederhana dan mudah diimplementasikan.
-* Cepat dalam proses pelatihan dan prediksi.\Efektif untuk dataset berukuran besar dan real-time prediction.
-
-Kelemahan Naïve Bayes:
-* Asumsi independensi antar fitur sering kali tidak terpenuhi dalam data nyata.
-* Rentan terhadap fitur yang memiliki nilai nol (zero frequency problem).
-* Akurasinya bisa menurun pada dataset yang sangat kompleks atau tidak seimbang.
-
-
-✅ Evaluation
----------------
-Pada tahap evaluasi model, metrik utama yang digunakan adalah accuracy. Metrik ini mengukur seberapa sering model melakukan prediksi yang benar terhadap seluruh data uji. Rumus yang digunakan untuk menghitung accuracy adalah sebagai berikut:
-
-                  ![image](https://github.com/user-attachments/assets/51bb3f0b-4e1f-49a5-8afa-3e64c0ad529e)
-
-Penjelasan masing-masing komponen:
-
-* TP (True Positive): Jumlah data aktual positif yang diprediksi dengan benar sebagai positif.
-* TN (True Negative): Jumlah data aktual negatif yang diprediksi dengan benar sebagai negatif.
-* FP (False Positive): Jumlah data aktual negatif yang secara salah diprediksi sebagai positif (disebut juga kesalahan tipe I).
-* FN (False Negative): Jumlah data aktual positif yang secara salah diprediksi sebagai negatif (disebut juga kesalahan tipe II).
-
-Dengan menggunakan rumus ini, kita dapat mengetahui seberapa akurat model dalam mengklasifikasikan data dengan benar. Nilai accuracy dihitung dalam bentuk persentase agar lebih mudah dipahami dan dibandingkan antar model.
-
-| Model       | Accuary   |
-| ----------- | ----------| 
-| RandomForest| 0.89      |
-| Naive Bayes | 0.49      |
-| SVC         | 0.89      |
-
-Tabel Hasil Accuracy 
+Dan pada Gambar 4. Top Rating Tertinggi dapat dilihat rating tertinggi pertama adalah Fullmetal Alchemist: Brotherhood, dan kedua Shingeki no Kyojin: Final Season, ketiga Steins Gate, keempat Shingeki no Kyojin Season 3 Part 2, kelima Hunter x Hunter(2011), keenam Gintama°, ketujuh Gintama', kedelapan Ginga Eiyuu Densetsu, kesembilan Gintama': Enchousen dan kesepuluh adalah 3-gatsu no Lion 2nd Season. Informasi ini dapat digunakan pengembang sistem dalam merekomendasikan anime yang populer kepada penggunanya. Hal ini dikarenakan semakin banyaknya kontribusi peringkat, semakin banyak pula pengguna yang menonton anime tersebut (populer).
 
 
-![image](https://github.com/user-attachments/assets/e111fe66-f044-4802-88cd-dcc0bf0b60ef)
+Modeling 
+-----------------
+Dalam proyek sistem rekomendasi anime ini, proses pemodelan dilakukan dengan menggunakan dua pendekatan utama, yaitu algoritma Cosine Similarity dan K-Nearest Neighbor (KNN). Kedua algoritma ini dipilih karena mampu mengukur kemiripan antar item atau antar pengguna berdasarkan fitur-fitur yang relevan dalam dataset, sehingga dapat menghasilkan rekomendasi yang sesuai dengan preferensi pengguna
 
-📊 Gambar Visualisasi Akurasi Model
+Cosine Similarity
+---------------------
+Algoritma Cosine Similarity digunakan untuk mengukur tingkat kesamaan antar anime berdasarkan vektor fitur tertentu, seperti genre, skor pengguna, dan sinopsis. Cosine Similarity bekerja dengan menghitung sudut antara dua vektor dalam ruang multidimensi, dan nilai kemiripannya berada dalam rentang 0 hingga 1, di mana nilai 1 menunjukkan dua item yang sangat mirip. Dengan pendekatan ini, sistem dapat merekomendasikan anime yang secara konten atau karakteristik memiliki kesamaan dengan anime yang sebelumnya disukai atau ditonton oleh pengguna. Pendekatan ini cocok untuk sistem berbasis content-based filtering karena fokus pada karakteristik dari item itu sendiri.
 
-Berdasarkan hasil yang ditunjukkan pada Gambar 3, dapat terlihat bahwa model Random Forest dan Support Vector Classifier (SVC) memiliki tingkat akurasi yang cukup tinggi dan hampir setara, masing-masing mencapai sekitar 90%. Sementara itu, model Naive Bayes memiliki performa yang jauh lebih rendah dengan akurasi hanya sekitar 50%.
+Cosine Similarity dituliskan dalam rumus:
+                                       _CosineSimilarity_(A,B)_=_(A·B)/(||A||∗||B||)__
 
-Dari ketiga model yang diuji, Random Forest dan SVC merupakan kandidat terbaik karena mampu memberikan hasil klasifikasi yang lebih akurat. Di antara keduanya, model Random Forest sedikit lebih unggul dalam akurasi dan cenderung lebih stabil dalam menghadapi data yang kompleks.
+dimana:
+(A·B)menyatakan produk titik dari vektor A dan B.
+||A|| mewakili norma Euclidean (magnitudo) dari vektor A.
+||B|| mewakili norma Euclidean (magnitudo) dari vektor B.
 
-Oleh karena itu, model Random Forest dipilih sebagai model utama untuk melakukan prediksi kualitas apel. Model ini dinilai efektif karena mampu menangani variabel dengan hubungan yang kompleks, memiliki toleransi terhadap outlier, dan juga dapat mengatasi overfitting dengan lebih baik dibandingkan model lainnya.
+Untuk melakukan pengujian model, digunakan potongan kode berikut.
+![image](https://github.com/user-attachments/assets/aee9a84b-aae4-4f7f-a7e4-55dcfa0a63b5)
+Gambar 5. Hasil Pengujian Model Content Based Filtering (dengan Filter Genres).
 
-📘 Referensi 
+Berdasarkan Gambar 5. Hasil Pengujian Model Content Based Filtering (dengan Filter Genres). Sistem telah berhasil merekomendasikan top 5 persen anime yang mirip dengan One Piece, yang termasuk beberapa film dan seri dari One Piece itu sendiri. Ini berarti bahwa jika seorang pengguna menyukai One Piece, maka sistem dapat memberikan rekomendasi untuk seri atau film lain dalam waralaba One Piece. Dengan pendekatan ini, sistem mengidentifikasi anime-anime yang memiliki kemiripan dalam genre dengan One Piece, sehingga memungkinkan pengguna untuk menemukan konten yang sesuai dengan preferensi mereka berdasarkan kesukaan mereka terhadap One Piece.
 
-1. Wood, T. (n.d.). What is a Random Forest? DeepAI. https://deepai.org/machine-learning-glossary-and-terms/random-forest
+Kelebihan Cosine Similarity:
+* Kompleksitas yang rendah, membuatnya efisien dalam perhitungan.
+* Cocok digunakan pada dataset dengan dimensi yang besar karena tidak terpengaruh oleh jumlah dimensi.
 
-2. Gandhi, R. (2018). Support Vector Machine — Introduction to Machine Learning Algorithms: SVM model from scratch. Towards Data Science. https://towardsdatascience.com/support-vector-machine-introduction-to-machine-learning-algorithms-934a444fca47
+Kekurangan Cosine Similarity:
+* Hanya memperhitungkan arah dari vektor, tanpa memperhitungkan magnitudo (besarnya).
+* Perbedaan dalam magnitudo vektor tidak sepenuhnya diperhitungkan, yang berarti nilai-nilai yang sangat berbeda dapat dianggap mirip jika arah vektornya sama.
 
-3. Gandhi, R. (2018). Naive Bayes Classifier. Towards Data Science. https://towardsdatascience.com/naive-bayes-classifier-81d512f50a7c
+K-Nearest Neighbor (KNN)
+--------------------------
+Selain Cosine Similarity, digunakan juga algoritma K-Nearest Neighbor (KNN) yang berfungsi untuk mengidentifikasi sejumlah tetangga terdekat (k-nearest neighbors) dari suatu anime atau pengguna berdasarkan kemiripan fitur. Dalam konteks sistem rekomendasi, KNN digunakan untuk mencari anime yang paling mirip dengan anime target, atau mencari pengguna dengan preferensi serupa, kemudian menghasilkan rekomendasi berdasarkan pola kesamaan tersebut. KNN sangat efektif dalam menangani data yang memiliki pola keterkaitan dan dapat digunakan untuk pendekatan collaborative filtering.
+Dengan menggabungkan kedua algoritma ini, sistem rekomendasi yang dibangun mampu menghasilkan saran tontonan yang relevan, baik berdasarkan konten maupun pola kesukaan pengguna lain. Pemilihan model ini juga mempertimbangkan kesederhanaan implementasi dan interpretasi hasil, serta performa yang cukup baik dalam konteks data yang digunakan.
 
-4. Brownlee, J. (2016). Data Preparation for Machine Learning. Machine Learning Mastery. https://machinelearningmastery.com/data-preparation-for-machine-learning/
+K-Nearest Neighbor dituliskan dalam rumus:
+                                      _EuclideanDistance_(P,Q) = sqrt (∑(Pi−Qi)2)__
 
-5. Chawla, N. V., Japkowicz, N., & Kotcz, A. (2004). Editorial: Special issue on learning from imbalanced data sets. SIGKDD Explorations, 6(1), 1–6. https://doi.org/10.1145/1007730.1007733
+dimana:
+* Pi mewakili fitur ke-i dari titik data P.
+* Qi mewakili fitur ke-i dari titik data Q (titik data dari kumpulan data D).
+* ∑ merupakan simbol penjumlahan pada semua fitur titik data.
+
+berikut merupakan hasil pengujian model K-Nearest Neighbor dengan metrik Euclidean Distance:
+Apabila pengguna menyukai aplikasi:Neon Genesis Evangelion Death Rebirth
+
+![image](https://github.com/user-attachments/assets/d79e2766-7ded-4217-9e42-9dba187fea8e)
+Gambar 6.Hasil Pengujian Model K-Nearest Neighbor
+
+Berdasarkan Gambar 6. Hasil Pengujian Model K-Nearest Neighbor, kita dapat melihat bahwa model K-Nearest Neighbor memberikan rekomendasi Anime berdasarkan kemiripan fitur-fitur seperti 'Name', 'Score', 'Type', dan 'Studios'. Hasil rekomendasi untuk Anime yang mirip dengan Neon Genesis Evangelion Death  Rebirth berdasarkan berdasarkan fitur-fitur yang dipelajari memberikan hasil rekomendasi aplikasi serupa yaitu: Neon Genesis Evangelion Death Rebirth, Neon Genesis Evangelion The End of Evangelion, Kekkaishi TV, Doraemon Doraemon Comes Back, Dr Slump Aralechan. Seperti tampak gambar 6. Hasil Pengujian Model K-Nearest Neighbor dengan tingkat kemiripan dalam persentase berturut-turut senilai 100.0%, 98.94%, 98.59%, 98.59%, 98.59% . Tentunya model ini akan sangat membantu pengguna menemukan aplikasi yang mirip dengan Neon Genesis Evangelion Death Rebirth.
+
+Kelebihan KNN:
+* Tahan terhadap data pelatihan yang memiliki derau.
+* Pelatihan sangat cepat.
+* Sederhana dan mudah dipelajari.
+* Efektif jika data pelatihan besar.
+
+Kekurangan KNN:
+* Penentuan nilai k menjadi bias dalam model.
+* Komputasi yang kompleks, terutama pada data besar atau dimensi fitur tinggi.
+* Keterbatasan memori karena harus menyimpan semua data pelatihan.
+* Rentan terhadap atribut yang tidak relevan yang dapat memengaruhi hasil klasifikasi.
+
+
+Evaluation
+------------------
+Evaluasi model dilakukan untuk mengetahui seberapa baik sistem rekomendasi bekerja dalam memberikan hasil yang akurat dan relevan bagi pengguna. Dalam proyek ini, beberapa metrik evaluasi yang digunakan meliputi Precision, Calinski-Harabasz Score, dan Davies-Bouldin Score. Metrik-metrik ini memberikan gambaran seberapa efektif model dalam mengenali pola data, baik dalam proses klasifikasi maupun pengelompokan.
+
+Precision
+--------------
+Precision merupakan salah satu metrik penting untuk mengukur ketepatan sistem dalam memberikan rekomendasi yang benar-benar sesuai. Metrik ini menunjukkan seberapa banyak hasil yang direkomendasikan oleh sistem ternyata memang relevan bagi pengguna. Semakin tinggi nilai precision, semakin akurat sistem dalam memberikan saran yang tepat sasaran.
+
+Rumus untuk menghitung precision adalah sebagai berikut: 
+                                                           Precision= True Positive (TP)+False Positive (FP) True Positive (TP)
+​Keterangan:
+
+* True Positive (TP) adalah jumlah item yang direkomendasikan dan benar-benar sesuai dengan preferensi pengguna.
+* False Positive (FP) adalah jumlah item yang direkomendasikan, tetapi sebenarnya tidak relevan.
+
+Sebagai contoh, pada pengujian model Content-Based Filtering yang menggunakan filter genre, diperoleh nilai precision sebesar 100% untuk rekomendasi Top-5. Artinya, dari lima anime yang direkomendasikan, semuanya sesuai dengan karakteristik anime yang disukai pengguna, seperti dalam kasus rekomendasi anime yang mirip dengan One Piece. Anime-anime yang direkomendasikan memiliki genre yang serupa, seperti Action, Adventure, Comedy, Drama, Fantasy, Shounen, dan Super Power.
+
+Calinski-Harabasz Score
+----------------------
+Calinski-Harabasz Score merupakan salah satu metrik evaluasi yang umum digunakan dalam algoritma pengelompokan (clustering). Metrik ini digunakan untuk menilai kualitas hasil pengelompokan dengan cara mengukur seberapa baik model memisahkan data ke dalam kelompok-kelompok yang kompak di dalam (intra-cluster) dan terpisah dengan baik antar kelompok (inter-cluster). Nilai skor Calinski-Harabasz (CH) yang tinggi mengindikasikan bahwa kelompok-kelompok yang terbentuk memiliki batas yang jelas dan jarak antar cluster yang besar, sekaligus kedekatan antar anggota dalam satu cluster. Hal ini menjadikan CH score sangat cocok digunakan ketika tidak tersedia label kebenaran (ground truth), karena sifatnya yang unsupervised.
+
+Rumus Calinski-Harabasz Score adalah sebagai berikut:
+                                              ![image](https://github.com/user-attachments/assets/e97baf7b-9959-4e76-84fa-b944cfde25ac)
+
+Dengan keterangan: 
+* B: Sebaran antar cluster (between-cluster scatter),
+* 𝑊 W: Sebaran dalam cluster (within-cluster scatter),
+* 𝑁 N: Jumlah total data, 𝑘 k: Jumlah total cluster.
+Semakin besar nilai CH, semakin baik kualitas pengelompokan yang dihasilkan. Nilai ini menjadi indikator penting dalam menentukan apakah model telah berhasil mengelompokkan data secara efektif. Untuk menghitung metrik ini pada model yang dikembangkan, digunakan potongan kode Python tertentu yang akan dijalankan setelah proses pengelompokan selesai.
+
+Untuk melakukan pengujian model, digunakan potongan kode berikut.
+![image](https://github.com/user-attachments/assets/c4464a06-86f8-4115-982a-623024c3a329) 
+
+Dan didapatkan score dari pengujian model.
+![image](https://github.com/user-attachments/assets/8b2477c9-3d62-4434-a2b4-38ca9ef1d1d1)
+
+Hasil evaluasi menunjukkan bahwa kluster dalam model ini masih belum terpisahkan dengan baik, yang tercermin dari nilai skor Calinski-Harabasz (CH) yang relatif rendah sebesar 3.1613291729405617. Kondisi ini mengindikasikan adanya potensi untuk rekomendasi yang kurang sesuai pada beberapa aplikasi, yang mungkin tidak sepenuhnya sesuai dengan preferensi pengguna. Oleh karena itu, perlu dilakukan peninjauan lebih lanjut atau penyesuaian pada model untuk meningkatkan pemisahan kluster dan akurasi rekomendasi.
+
+Davies Bouldin Score
+Davies Bouldin Score (DB) adalah metrik evaluasi kinerja pengelompokan yang mengukur rata-rata kesamaan setiap cluster dengan cluster yang paling mirip dengan membandingkan jarak dalam cluster terhadap jarak antar cluster. Dengan skor minimum nol, semakin rendah nilai DB, semakin baik kinerja pengelompokannya, menunjukkan cluster yang lebih dekat satu sama lain dan kurang tersebar. Berbeda dari sebagian besar metrik, DB tidak memerlukan pengetahuan apriori tentang label kebenaran dasar, mirip dengan Silhouette Score, namun memiliki formulasi yang lebih sederhana, memberikan cara efisien untuk mengevaluasi pengelompokan tanpa memerlukan pengetahuan tambahan tentang struktur data.
+
+Rumus Davies-Bouldin Score (DB) adalah:
+![image](https://github.com/user-attachments/assets/119a6be4-8144-42e3-90e5-cde38c95820c)
+
+Di mana:
+* ( k ) adalah jumlah cluster.
+* ( R_i ) adalah radius dalam cluster ke-i.
+* ( d(c_i, c_j) ) adalah jarak antara pusat cluster ke-i (( c_i )) dan pusat cluster ke-j (( c_j )).
+  
+Davies-Bouldin didefinisikan sebagai rata-rata dari nilai-nilai R, di mana setiap nilai R adalah rasio antara jumlah dari radius dalam cluster (dalam pengertian jarak, misalnya Euclidean distance) dan jarak antara pusat cluster, dengan pusat-pusat yang lain. Rasio ini digunakan untuk mengevaluasi kemiripan setiap cluster dengan cluster lain.
+
+ Untuk melakukan pengujian model, digunakan potongan kode berikut.
+![image](https://github.com/user-attachments/assets/116e83a6-b0c0-4afd-9306-9915f0af0e8f)
+
+Dan didapatkan score dari pengujian model.
+![image](https://github.com/user-attachments/assets/48c83790-0bb8-4a27-ae19-495844ca3b12)
+
+Hasil evaluasi Davies-Bouldin (DB) menunjukkan bahwa model ini memiliki skor yang relatif cukup kecil, dengan nilai DB sebesar 0.7864266764751376 Hal ini menandakan bahwa model sudah memiliki separasi kluster yang cukup baik. Sebagai hasilnya, rekomendasi anime memiliki kualitas yang baik, mempertimbangkan bahwa pengelompokan kluster dalam model sudah cukup efektif dalam memisahkan data.
+
+Refrensi 
+-----------------
+1. Nazhif Muafa Roziqiin & M. Faisal. (2024). Sistem Rekomendasi Pemilihan Anime Menggunakan User‑Based Collaborative Filtering.
+2. Helmy Dianty Putri & Muhammad Faisal. (2023). Analyzing the Effectiveness of Collaborative Filtering and Content‑Based Filtering Methods in Anime Recommendation Systems.
+3. Vynska Amalia Permadi & Rezky P. Raharjo. (2023). Improvement of KNN Collaborative Filtering Model in User‑based Approach on Anime Recommendation System.
+4. Hemdani R. Herlianto. (2023). Pemfilteran Berbasis Konten yang Dapat Menentukan Top‑N Rekomendasi Anime Bagi Pengguna.
