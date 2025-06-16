@@ -81,16 +81,20 @@ Kolom datasets anime memiliki informasi berikut:
 * Dropped: Jumlah anime yang dihentikan oleh pengguna.
 
 ![image](https://github.com/user-attachments/assets/6f9f82de-2aa5-4f5e-a064-1d89c3a7f9db)
+
 Gambar 1.Anime Categories Distribusion
 
 ![image](https://github.com/user-attachments/assets/ec57393d-7b9a-464d-96fd-c85fd264c2ab)
+
 Gambar 2.Rating Distribusion
 Berdasarkan Gambar 2. Categories distribution anime terdiri dari 6 tipe berupa TV, OVA, Movie, Special, ONA, Music. TV (Television Series) yang ditayangkan di televisi dengan episode yang bervariasi, OVA (Original Video Animation) yang dirilis untuk media rumahan, seperti DVD, Movie yang dirilis di bioskop dengan durasi yang lebih panjang, Special yang seringkali menjadi bonus atau tambahan dari seri TV atau film, ONA (Original Net Animation) yang didistribusikan secara daring, dan Music yang dibuat untuk menyoroti perilisan album musik atau single dan berdasarkan Gambar 2. Rating dapat kita lihat rata-rata Rating adalah 6.5, minimal rating adalah 1.8, dan maxsimal rating adalah 9.1. Dan 
 
 ![image](https://github.com/user-attachments/assets/8a176c24-83a8-4b9a-a587-9e4c1a086751)
+
 Gambar 3.Top 10 Anime 
 
 ![image](https://github.com/user-attachments/assets/15ebba06-9d6e-4091-8ce2-942f88602695)
+
 Gambar 4.Top 10 Anime Rating 
 
 Berdasarkan Gambar 3. Top 10 Anime Community dapat dilihat Top 10 Komunitas anime Death Note menjadi komunitas terbanyak pertama, disusul dengan Shingeki no Kyojin kedua, Fullmetal Alchemist: Brotherhood ketiga, Sword Art Online keempat, One Punch Man kelima, Boku no Hero Academia keenam, Tokyo Ghoul ketujuh, Naruto kedelapan, Steins Gate kesembilan, dan No Game No Life kesepuluh. Informasi ini dapat digunakan pengembang sistem dalam merekomendasikan anime yang populer kepada penggunanya. Banyaknya anggota komunitas anime menandakan bahwa anime cukup favorit dan populer di kalangan pengguna.
@@ -107,6 +111,7 @@ Cosine Similarity
 Algoritma Cosine Similarity digunakan untuk mengukur tingkat kesamaan antar anime berdasarkan vektor fitur tertentu, seperti genre, skor pengguna, dan sinopsis. Cosine Similarity bekerja dengan menghitung sudut antara dua vektor dalam ruang multidimensi, dan nilai kemiripannya berada dalam rentang 0 hingga 1, di mana nilai 1 menunjukkan dua item yang sangat mirip. Dengan pendekatan ini, sistem dapat merekomendasikan anime yang secara konten atau karakteristik memiliki kesamaan dengan anime yang sebelumnya disukai atau ditonton oleh pengguna. Pendekatan ini cocok untuk sistem berbasis content-based filtering karena fokus pada karakteristik dari item itu sendiri.
 
 Cosine Similarity dituliskan dalam rumus:
+
                                        _CosineSimilarity_(A,B)_=_(A·B)/(||A||∗||B||)__
 
 dimana:
@@ -115,7 +120,9 @@ dimana:
 ||B|| mewakili norma Euclidean (magnitudo) dari vektor B.
 
 Untuk melakukan pengujian model, digunakan potongan kode berikut.
+
 ![image](https://github.com/user-attachments/assets/aee9a84b-aae4-4f7f-a7e4-55dcfa0a63b5)
+
 Gambar 5. Hasil Pengujian Model Content Based Filtering (dengan Filter Genres).
 
 Berdasarkan Gambar 5. Hasil Pengujian Model Content Based Filtering (dengan Filter Genres). Sistem telah berhasil merekomendasikan top 5 persen anime yang mirip dengan One Piece, yang termasuk beberapa film dan seri dari One Piece itu sendiri. Ini berarti bahwa jika seorang pengguna menyukai One Piece, maka sistem dapat memberikan rekomendasi untuk seri atau film lain dalam waralaba One Piece. Dengan pendekatan ini, sistem mengidentifikasi anime-anime yang memiliki kemiripan dalam genre dengan One Piece, sehingga memungkinkan pengguna untuk menemukan konten yang sesuai dengan preferensi mereka berdasarkan kesukaan mereka terhadap One Piece.
@@ -134,6 +141,7 @@ Selain Cosine Similarity, digunakan juga algoritma K-Nearest Neighbor (KNN) yang
 Dengan menggabungkan kedua algoritma ini, sistem rekomendasi yang dibangun mampu menghasilkan saran tontonan yang relevan, baik berdasarkan konten maupun pola kesukaan pengguna lain. Pemilihan model ini juga mempertimbangkan kesederhanaan implementasi dan interpretasi hasil, serta performa yang cukup baik dalam konteks data yang digunakan.
 
 K-Nearest Neighbor dituliskan dalam rumus:
+
                                       _EuclideanDistance_(P,Q) = sqrt (∑(Pi−Qi)2)__
 
 dimana:
@@ -145,6 +153,7 @@ berikut merupakan hasil pengujian model K-Nearest Neighbor dengan metrik Euclide
 Apabila pengguna menyukai aplikasi:Neon Genesis Evangelion Death Rebirth
 
 ![image](https://github.com/user-attachments/assets/d79e2766-7ded-4217-9e42-9dba187fea8e)
+
 Gambar 6.Hasil Pengujian Model K-Nearest Neighbor
 
 Berdasarkan Gambar 6. Hasil Pengujian Model K-Nearest Neighbor, kita dapat melihat bahwa model K-Nearest Neighbor memberikan rekomendasi Anime berdasarkan kemiripan fitur-fitur seperti 'Name', 'Score', 'Type', dan 'Studios'. Hasil rekomendasi untuk Anime yang mirip dengan Neon Genesis Evangelion Death  Rebirth berdasarkan berdasarkan fitur-fitur yang dipelajari memberikan hasil rekomendasi aplikasi serupa yaitu: Neon Genesis Evangelion Death Rebirth, Neon Genesis Evangelion The End of Evangelion, Kekkaishi TV, Doraemon Doraemon Comes Back, Dr Slump Aralechan. Seperti tampak gambar 6. Hasil Pengujian Model K-Nearest Neighbor dengan tingkat kemiripan dalam persentase berturut-turut senilai 100.0%, 98.94%, 98.59%, 98.59%, 98.59% . Tentunya model ini akan sangat membantu pengguna menemukan aplikasi yang mirip dengan Neon Genesis Evangelion Death Rebirth.
@@ -171,6 +180,7 @@ Precision
 Precision merupakan salah satu metrik penting untuk mengukur ketepatan sistem dalam memberikan rekomendasi yang benar-benar sesuai. Metrik ini menunjukkan seberapa banyak hasil yang direkomendasikan oleh sistem ternyata memang relevan bagi pengguna. Semakin tinggi nilai precision, semakin akurat sistem dalam memberikan saran yang tepat sasaran.
 
 Rumus untuk menghitung precision adalah sebagai berikut: 
+
                                                            Precision= True Positive (TP)+False Positive (FP) True Positive (TP)
 ​Keterangan:
 
@@ -184,6 +194,7 @@ Calinski-Harabasz Score
 Calinski-Harabasz Score merupakan salah satu metrik evaluasi yang umum digunakan dalam algoritma pengelompokan (clustering). Metrik ini digunakan untuk menilai kualitas hasil pengelompokan dengan cara mengukur seberapa baik model memisahkan data ke dalam kelompok-kelompok yang kompak di dalam (intra-cluster) dan terpisah dengan baik antar kelompok (inter-cluster). Nilai skor Calinski-Harabasz (CH) yang tinggi mengindikasikan bahwa kelompok-kelompok yang terbentuk memiliki batas yang jelas dan jarak antar cluster yang besar, sekaligus kedekatan antar anggota dalam satu cluster. Hal ini menjadikan CH score sangat cocok digunakan ketika tidak tersedia label kebenaran (ground truth), karena sifatnya yang unsupervised.
 
 Rumus Calinski-Harabasz Score adalah sebagai berikut:
+
                                               ![image](https://github.com/user-attachments/assets/e97baf7b-9959-4e76-84fa-b944cfde25ac)
 
 Dengan keterangan: 
@@ -193,9 +204,11 @@ Dengan keterangan:
 Semakin besar nilai CH, semakin baik kualitas pengelompokan yang dihasilkan. Nilai ini menjadi indikator penting dalam menentukan apakah model telah berhasil mengelompokkan data secara efektif. Untuk menghitung metrik ini pada model yang dikembangkan, digunakan potongan kode Python tertentu yang akan dijalankan setelah proses pengelompokan selesai.
 
 Untuk melakukan pengujian model, digunakan potongan kode berikut.
+
 ![image](https://github.com/user-attachments/assets/c4464a06-86f8-4115-982a-623024c3a329) 
 
 Dan didapatkan score dari pengujian model.
+
 ![image](https://github.com/user-attachments/assets/8b2477c9-3d62-4434-a2b4-38ca9ef1d1d1)
 
 Hasil evaluasi menunjukkan bahwa kluster dalam model ini masih belum terpisahkan dengan baik, yang tercermin dari nilai skor Calinski-Harabasz (CH) yang relatif rendah sebesar 3.1613291729405617. Kondisi ini mengindikasikan adanya potensi untuk rekomendasi yang kurang sesuai pada beberapa aplikasi, yang mungkin tidak sepenuhnya sesuai dengan preferensi pengguna. Oleh karena itu, perlu dilakukan peninjauan lebih lanjut atau penyesuaian pada model untuk meningkatkan pemisahan kluster dan akurasi rekomendasi.
@@ -204,6 +217,7 @@ Davies Bouldin Score
 Davies Bouldin Score (DB) adalah metrik evaluasi kinerja pengelompokan yang mengukur rata-rata kesamaan setiap cluster dengan cluster yang paling mirip dengan membandingkan jarak dalam cluster terhadap jarak antar cluster. Dengan skor minimum nol, semakin rendah nilai DB, semakin baik kinerja pengelompokannya, menunjukkan cluster yang lebih dekat satu sama lain dan kurang tersebar. Berbeda dari sebagian besar metrik, DB tidak memerlukan pengetahuan apriori tentang label kebenaran dasar, mirip dengan Silhouette Score, namun memiliki formulasi yang lebih sederhana, memberikan cara efisien untuk mengevaluasi pengelompokan tanpa memerlukan pengetahuan tambahan tentang struktur data.
 
 Rumus Davies-Bouldin Score (DB) adalah:
+
 ![image](https://github.com/user-attachments/assets/119a6be4-8144-42e3-90e5-cde38c95820c)
 
 Di mana:
@@ -214,9 +228,11 @@ Di mana:
 Davies-Bouldin didefinisikan sebagai rata-rata dari nilai-nilai R, di mana setiap nilai R adalah rasio antara jumlah dari radius dalam cluster (dalam pengertian jarak, misalnya Euclidean distance) dan jarak antara pusat cluster, dengan pusat-pusat yang lain. Rasio ini digunakan untuk mengevaluasi kemiripan setiap cluster dengan cluster lain.
 
  Untuk melakukan pengujian model, digunakan potongan kode berikut.
+ 
 ![image](https://github.com/user-attachments/assets/116e83a6-b0c0-4afd-9306-9915f0af0e8f)
 
 Dan didapatkan score dari pengujian model.
+
 ![image](https://github.com/user-attachments/assets/48c83790-0bb8-4a27-ae19-495844ca3b12)
 
 Hasil evaluasi Davies-Bouldin (DB) menunjukkan bahwa model ini memiliki skor yang relatif cukup kecil, dengan nilai DB sebesar 0.7864266764751376 Hal ini menandakan bahwa model sudah memiliki separasi kluster yang cukup baik. Sebagai hasilnya, rekomendasi anime memiliki kualitas yang baik, mempertimbangkan bahwa pengelompokan kluster dalam model sudah cukup efektif dalam memisahkan data.
